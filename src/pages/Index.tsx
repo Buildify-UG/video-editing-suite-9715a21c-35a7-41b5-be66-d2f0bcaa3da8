@@ -88,7 +88,7 @@ const Index = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-primary">CineGear</h1>
+              <h1 className="text-2xl font-bold text-primary">4STAR ORIGINALS</h1>
             </div>
 
             {/* Desktop Navigation */}
@@ -284,7 +284,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="text-lg font-bold mb-4">CineGear</h3>
+              <h3 className="text-lg font-bold mb-4">4star originals</h3>
               <p className="text-sm opacity-90">Professional video equipment for creators</p>
             </div>
             <div>
