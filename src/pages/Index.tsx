@@ -296,7 +296,7 @@ const Index = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Support</h4>
+              <h4 className="mb-4 font-bold">Support -on instagram , tiktok , twitter, facebook </h4>
               <ul className="space-y-2 text-sm">
                 <li><a href="#" className="opacity-90 hover:opacity-100">Contact</a></li>
                 <li><a href="#" className="opacity-90 hover:opacity-100">FAQ</a></li>
