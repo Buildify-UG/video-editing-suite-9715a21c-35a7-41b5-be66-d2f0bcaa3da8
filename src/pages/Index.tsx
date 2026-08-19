@@ -290,7 +290,7 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Shop</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="opacity-90 hover:opacity-100">Cameras</a></li>
+                <li><a href="#" className="opacity-90 hover:opacity-100">Common Camera <br/>TypesDSLR (Digital Single-Lens Reflex): Uses a moving mirror to show the image through an optical viewfinder. Great for battery life and lens choices.<br/>Mirrorless: Lacks a mirror, making them smaller and lighter with fast digital screens and electronic viewfinders.<br/>Smartphone: Pocket-sized mobile devices with built-in multi-lens setups and smart software. Best for quick, everyday sharing.<br/>Action Camera: Small, tough, and waterproof devices designed to mount on helmets, bikes, or boards for fast sports.<br/>Cinema Camera: High-end heavy gear built for Hollywood movies, TV shows, and big commercials.<br/>Point-and-Shoot: Simple, fixed-lens compact cameras made for easy travel and family snapshots.<br/>Medium Format: Massive sensor cameras used by fashion and studio pros for extreme detail and huge prints.<br/>If you'd like, I can tell you:<br/>Which camera type is best for a specific budget<br/>The differences between mirrorless and DSLR<br/>Recommendations for vlogging or wildlifeLet me know what you want to learn next.</a></li>
                 <li><a href="#" className="opacity-90 hover:opacity-100">Lenses</a></li>
                 <li><a href="#" className="opacity-90 hover:opacity-100">Accessories</a></li>
               </ul>
