@@ -73,12 +73,18 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev =>
       prev.includes(id) ? prev.filter(fav => fav !== id) : [...prev, id]
     );
   };
+
+  const categories = ['Cameras', 'Lenses', 'Accessories', 'Lighting'];
+  const filteredProducts = selectedCategory
+    ? products.filter(p => p.category === selectedCategory)
+    : products;
 
   return (
     <div className="min-h-screen bg-background">
@@ -182,9 +188,36 @@ const Index = () => {
           <p className="text-muted-foreground">Handpicked equipment for professionals</p>
         </div>
 
+        {/* Category Filter */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className={`px-4 py-2 rounded-lg font-medium transition ${
+              selectedCategory === null
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted text-foreground hover:bg-border'
+            }`}
+          >
+            All
+          </button>
+          {categories.map(category => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 py-2 rounded-lg font-medium transition ${
+                selectedCategory === category
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-foreground hover:bg-border'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map(product => (
+          {filteredProducts.map(product => (
             <div
               key={product.id}
               className="bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition-shadow"
