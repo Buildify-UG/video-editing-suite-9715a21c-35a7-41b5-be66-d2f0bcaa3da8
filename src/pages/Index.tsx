@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ShoppingCart, Search, Menu, X, Star, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface Product {
   id: number;
@@ -13,59 +14,264 @@ interface Product {
 }
 
 const products: Product[] = [
+  // Cameras - DSLR & Mirrorless
   {
     id: 1,
-    name: '4K Professional Camera',
+    name: 'Canon EOS R5 Mirrorless Camera',
     category: 'Cameras',
-    price: 2499,
+    price: 3899,
     image: 'https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=400&h=300&fit=crop',
     rating: 4.8,
     reviews: 234,
   },
   {
     id: 2,
-    name: 'Ultra Wide Lens 14mm',
-    category: 'Lenses',
-    price: 899,
-    image: 'https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=400&h=300&fit=crop',
-    rating: 4.6,
-    reviews: 156,
-  },
-  {
-    id: 3,
-    name: 'Professional Tripod',
-    category: 'Accessories',
-    price: 249,
-    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop',
-    rating: 4.7,
-    reviews: 89,
-  },
-  {
-    id: 4,
-    name: '8K Video Camera',
+    name: 'Sony A7S III Cinema Camera',
     category: 'Cameras',
-    price: 5999,
+    price: 3980,
     image: 'https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=400&h=300&fit=crop',
     rating: 4.9,
     reviews: 412,
   },
   {
-    id: 5,
-    name: 'Gimbal Stabilizer Pro',
-    category: 'Accessories',
-    price: 799,
+    id: 3,
+    name: 'RED Komodo Cinema Camera 8K',
+    category: 'Cameras',
+    price: 5999,
     image: 'https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=400&h=300&fit=crop',
-    rating: 4.5,
-    reviews: 203,
+    rating: 4.9,
+    reviews: 189,
+  },
+  {
+    id: 4,
+    name: 'iPhone 15 Pro Max Mobile Video',
+    category: 'Cameras',
+    price: 1199,
+    image: 'https://images.unsplash.com/photo-1592286927505-1def25e5cefd?w=400&h=300&fit=crop',
+    rating: 4.7,
+    reviews: 523,
+  },
+  
+  // Lenses - Prime
+  {
+    id: 5,
+    name: 'Canon RF 50mm f/1.2 Prime Lens',
+    category: 'Lenses',
+    price: 2299,
+    image: 'https://images.unsplash.com/photo-1606933248051-5ce98adc5d42?w=400&h=300&fit=crop',
+    rating: 4.8,
+    reviews: 156,
   },
   {
     id: 6,
-    name: 'LED Ring Light Kit',
-    category: 'Lighting',
-    price: 349,
-    image: 'https://images.unsplash.com/photo-1578926314433-e2789879f90e?w=400&h=300&fit=crop',
-    rating: 4.4,
+    name: 'Sony FE 35mm f/1.4 Prime Lens',
+    category: 'Lenses',
+    price: 1998,
+    image: 'https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=400&h=300&fit=crop',
+    rating: 4.7,
+    reviews: 134,
+  },
+  
+  // Lenses - Zoom
+  {
+    id: 7,
+    name: 'Canon RF 24-70mm f/2.8 Zoom Lens',
+    category: 'Lenses',
+    price: 2499,
+    image: 'https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=400&h=300&fit=crop',
+    rating: 4.6,
+    reviews: 201,
+  },
+  {
+    id: 8,
+    name: 'Sony FE 70-200mm f/2.8 Zoom Lens',
+    category: 'Lenses',
+    price: 2598,
+    image: 'https://images.unsplash.com/photo-1606933248051-5ce98adc5d42?w=400&h=300&fit=crop',
+    rating: 4.8,
     reviews: 178,
+  },
+  
+  // Lenses - ND Filters
+  {
+    id: 9,
+    name: 'Haida ND Filter Kit 37-82mm',
+    category: 'Lenses',
+    price: 149,
+    image: 'https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=400&h=300&fit=crop',
+    rating: 4.6,
+    reviews: 89,
+  },
+  
+  // Stabilization - Tripods
+  {
+    id: 10,
+    name: 'Manfrotto 535 Tripod Pro',
+    category: 'Stabilization',
+    price: 349,
+    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop',
+    rating: 4.7,
+    reviews: 267,
+  },
+  {
+    id: 11,
+    name: 'Gitzo Systematic Carbon Tripod',
+    category: 'Stabilization',
+    price: 799,
+    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop',
+    rating: 4.9,
+    reviews: 145,
+  },
+  
+  // Stabilization - Gimbals
+  {
+    id: 12,
+    name: 'DJI RS 4 Gimbal Stabilizer',
+    category: 'Stabilization',
+    price: 1299,
+    image: 'https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=400&h=300&fit=crop',
+    rating: 4.8,
+    reviews: 312,
+  },
+  {
+    id: 13,
+    name: 'Zhiyun Crane 4S Gimbal',
+    category: 'Stabilization',
+    price: 899,
+    image: 'https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=400&h=300&fit=crop',
+    rating: 4.6,
+    reviews: 203,
+  },
+  
+  // Stabilization - Sliders
+  {
+    id: 14,
+    name: 'Konova K5 Camera Slider 5ft',
+    category: 'Stabilization',
+    price: 599,
+    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop',
+    rating: 4.7,
+    reviews: 98,
+  },
+  
+  // Audio - Shotgun Microphones
+  {
+    id: 15,
+    name: 'Rode NTG3 Shotgun Microphone',
+    category: 'Audio',
+    price: 449,
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop',
+    rating: 4.8,
+    reviews: 234,
+  },
+  {
+    id: 16,
+    name: 'Sennheiser MKE 600 Shotgun Mic',
+    category: 'Audio',
+    price: 299,
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop',
+    rating: 4.7,
+    reviews: 156,
+  },
+  
+  // Audio - Lavalier Microphones
+  {
+    id: 17,
+    name: 'Rode Wireless GO II Lavalier',
+    category: 'Audio',
+    price: 599,
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop',
+    rating: 4.9,
+    reviews: 412,
+  },
+  {
+    id: 18,
+    name: 'Sennheiser EW 112P G4 Lavalier',
+    category: 'Audio',
+    price: 1299,
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop',
+    rating: 4.8,
+    reviews: 189,
+  },
+  
+  // Audio - Audio Recorders
+  {
+    id: 19,
+    name: 'Zoom F6 Audio Recorder',
+    category: 'Audio',
+    price: 699,
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop',
+    rating: 4.9,
+    reviews: 267,
+  },
+  {
+    id: 20,
+    name: 'Sound Devices MixPre-6 II Recorder',
+    category: 'Audio',
+    price: 1299,
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop',
+    rating: 4.9,
+    reviews: 145,
+  },
+  
+  // Lighting - LED Panels
+  {
+    id: 21,
+    name: 'Neewer RGB LED Panel 600W',
+    category: 'Lighting',
+    price: 249,
+    image: 'https://images.unsplash.com/photo-1578926314433-e2789879f90e?w=400&h=300&fit=crop',
+    rating: 4.6,
+    reviews: 312,
+  },
+  {
+    id: 22,
+    name: 'Aputure MC 4-Light LED Kit',
+    category: 'Lighting',
+    price: 1699,
+    image: 'https://images.unsplash.com/photo-1578926314433-e2789879f90e?w=400&h=300&fit=crop',
+    rating: 4.9,
+    reviews: 203,
+  },
+  
+  // Lighting - Softboxes
+  {
+    id: 23,
+    name: 'Godox SB-FW95 Softbox 95cm',
+    category: 'Lighting',
+    price: 89,
+    image: 'https://images.unsplash.com/photo-1578926314433-e2789879f90e?w=400&h=300&fit=crop',
+    rating: 4.7,
+    reviews: 98,
+  },
+  {
+    id: 24,
+    name: 'Chimera Softbox Pro 48" Kit',
+    category: 'Lighting',
+    price: 599,
+    image: 'https://images.unsplash.com/photo-1578926314433-e2789879f90e?w=400&h=300&fit=crop',
+    rating: 4.8,
+    reviews: 234,
+  },
+  
+  // Accessories - Memory Cards
+  {
+    id: 25,
+    name: 'SanDisk Extreme Pro 1TB CF Express',
+    category: 'Accessories',
+    price: 449,
+    image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400&h=300&fit=crop',
+    rating: 4.8,
+    reviews: 156,
+  },
+  {
+    id: 26,
+    name: 'Lexar Professional 1000x 128GB SD Card',
+    category: 'Accessories',
+    price: 79,
+    image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400&h=300&fit=crop',
+    rating: 4.7,
+    reviews: 412,
   },
 ];
 
