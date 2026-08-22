@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { ShoppingCart, Search, Menu, X, Star, Heart } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Star, Heart, MessageCircle, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Link } from 'react-router-dom';
 
 interface Product {
   id: number;
